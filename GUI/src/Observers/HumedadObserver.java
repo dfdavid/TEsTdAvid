@@ -1,6 +1,5 @@
-/**
- * Created by Torce on 04/06/2017.
- */
+package Observers;
+
 public interface HumedadObserver {
     void updateHumedad();
 }

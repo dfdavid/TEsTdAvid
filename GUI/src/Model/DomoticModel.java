@@ -1,13 +1,20 @@
+package Model;
+
+import Observers.*;
+
 import java.util.ArrayList;
 
-/**
- * Created by Torce on 04/06/2017.
- */
-public class DomoticModel implements DomoticModelInterface{
+
+public class DomoticModel implements DomoticModelInterface {
+
+    public DomoticModel(){}
 
     //ArrayLists de observers
-    ArrayList temperaturaObservers = new ArrayList();
-    ArrayList humedadObservers = new ArrayList();
+    private ArrayList temperaturaObservers = new ArrayList();
+    private ArrayList humedadObservers = new ArrayList();
+    private ArrayList acObservers = new ArrayList();
+    private ArrayList estufaObservers = new ArrayList();
+    private ArrayList humidificadorObservers = new ArrayList();
 
     //Variables reales a ser desplegadas en la interfaz gráfica
     private int TemperaturaSensor = 30;
@@ -21,6 +28,12 @@ public class DomoticModel implements DomoticModelInterface{
     private boolean AC = false;
     private boolean Estufa = false;
     private boolean Humidificador = false;
+
+    @Override
+    public int getTemperaturaSensor() { return TemperaturaSensor;}
+
+    @Override
+    public int getHumedadSensor() { return HumedadSensor;}
 
     @Override
     public void setTemperaturaDeseada(int t) {TemperaturaDeseada=t;}
@@ -90,6 +103,66 @@ public class DomoticModel implements DomoticModelInterface{
         for(int i = 0; i < humedadObservers.size(); i++) {
             TemperaturaObserver observer = (TemperaturaObserver)temperaturaObservers.get(i);
             observer.updateTemperatura();
+        }
+    }
+
+    //Observers de AC
+    @Override
+    public void registerObserver(ACObserver o) {acObservers.add(o);}
+
+    @Override
+    public void removeObserver(ACObserver o) {
+        int i = acObservers.indexOf(o);
+        if (i >= 0) {
+            acObservers.remove(i);
+        }
+    }
+
+    @Override
+    public void notifyACObservers() {
+        for(int i = 0; i < acObservers.size(); i++) {
+            ACObserver observer = (ACObserver)acObservers.get(i);
+            observer.updateAC();
+        }
+    }
+
+    //Observers de Estufa
+    @Override
+    public void registerObserver(EstufaObserver o) {estufaObservers.add(o);}
+
+    @Override
+    public void removeObserver(EstufaObserver o) {
+        int i = estufaObservers.indexOf(o);
+        if (i >= 0) {
+            estufaObservers.remove(i);
+        }
+    }
+
+    @Override
+    public void notifyEstufaObservers() {
+        for(int i = 0; i < estufaObservers.size(); i++) {
+            EstufaObserver observer = (EstufaObserver)estufaObservers.get(i);
+            observer.updateEstufa();
+        }
+    }
+
+    //Observers de Humidificador
+    @Override
+    public void registerObserver(HumidificadorObserver o) {humidificadorObservers.add(o);}
+
+    @Override
+    public void removeObserver(HumidificadorObserver o) {
+        int i = humidificadorObservers.indexOf(o);
+        if (i >= 0) {
+            humidificadorObservers.remove(i);
+        }
+    }
+
+    @Override
+    public void notifyHumidificadorObservers() {
+        for(int i = 0; i < humidificadorObservers.size(); i++) {
+            HumidificadorObserver observer = (HumidificadorObserver)humidificadorObservers.get(i);
+            observer.updateHumidificador();
         }
     }
 }

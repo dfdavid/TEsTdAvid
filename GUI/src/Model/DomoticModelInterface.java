@@ -1,8 +1,11 @@
-/**
- * Created by Torce on 04/06/2017.
- */
+package Model;
+
+import Observers.*;
 
 public interface DomoticModelInterface {
+
+    int getTemperaturaSensor();
+    int getHumedadSensor();
 
     void setTemperaturaDeseada(int t);
     int getTemperaturaDeseada();
@@ -26,4 +29,17 @@ public interface DomoticModelInterface {
     void registerObserver(HumedadObserver o);
     void removeObserver(HumedadObserver o);
     void notifyHumedadObservers();
+
+    void registerObserver(ACObserver o);
+    void removeObserver(ACObserver o);
+    void notifyACObservers();
+
+    void registerObserver(EstufaObserver o);
+    void removeObserver(EstufaObserver o);
+    void notifyEstufaObservers();
+
+    void registerObserver(HumidificadorObserver o);
+    void removeObserver(HumidificadorObserver o);
+    void notifyHumidificadorObservers();
+
 }
